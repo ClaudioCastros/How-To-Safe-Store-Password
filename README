@@ -1,0 +1,7 @@
+Utilize o comando abaixo para instalar as
+dependências do script.
+
+pip install -r requirements.txt
+
+Após todas as dependências estarem instaladas
+execute o script main.py.
