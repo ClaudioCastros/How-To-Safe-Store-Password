@@ -19,7 +19,7 @@ Embora a criptografia seja destinada a proteger os dados na transmissão, o hash
 não foram alterados e se são autênticos.
 As senhas não são armazenadas como texto simples em bancos de dados, mas em valores com hash.
 
-#Sal
+#Salt
 Salt é um valor aleatório criptograficamente forte de comprimento fixo que é adicionado à entrada de funções de hash 
 para criar hashes exclusivos para cada entrada. Um sal é adicionado para tornar uma saída de hash de senha exclusiva, 
 mesmo para usuários que adotam senhas comuns.
