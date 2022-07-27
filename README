@@ -97,4 +97,9 @@ Por fim, é possível testar as funções [ 1 ] e [ 2 ] do menu.
 O bcrypt conta com funções prontas (como por exemplo: checkpw()) para comparar a senha digitada 
 pelo usuário, na hora de um login e o hash salvo no banco de dados, retornando True ou False.
 
+
+Referencias: 
+https://zetcode.com/python/bcrypt/
+https://pypi.org/project/bcrypt/
+
 --Fim--
