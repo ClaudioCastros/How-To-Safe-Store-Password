@@ -1,3 +1,42 @@
+[Nota]: Explicações sobre o código estão ao final do texto abaixo.
+
+#OBJETIVO
+- Aprender na pratica um método para armazenar credenciais de usuários, de uma maneira mais segura.
+
+#Criptografia 
+É o processo de codificação de uma mensagem ou informação de tal forma que apenas pessoas
+autorizadas possam lê-la com uma chave correspondente e aqueles que não estão autorizados não podem. 
+A informação ou mensagem pretendida, referida como texto simples, é criptografada usando um algoritmo de 
+criptografia – uma cifra – gerando texto cifrado que só pode ser lido se descriptografado. 
+A criptografia é uma função bidirecional. Quando criptografamos algo, estamos fazendo isso com a intenção 
+de descriptografá-lo mais tarde. A criptografia é usada para proteger os dados quando transmitidos ou armazenados;
+
+#Hash
+Hashing é o processo de usar um algoritmo para mapear dados de qualquer tamanho para um comprimento fixo. 
+Isso é chamado de valor de hash. Enquanto a criptografia é uma função bidirecional, o hash é uma função unidirecional. 
+Embora seja tecnicamente possível reverter o hash de um valor, o poder de computação necessário o torna inviável. 
+Embora a criptografia seja destinada a proteger os dados na transmissão, o hash destina-se a verificar se os dados 
+não foram alterados e se são autênticos.
+As senhas não são armazenadas como texto simples em bancos de dados, mas em valores com hash.
+
+#Sal
+Salt é um valor aleatório criptograficamente forte de comprimento fixo que é adicionado à entrada de funções de hash 
+para criar hashes exclusivos para cada entrada. Um sal é adicionado para tornar uma saída de hash de senha exclusiva, 
+mesmo para usuários que adotam senhas comuns.
+
+#A função de hash bcrypt
+O bcrypt é uma função de hash de senha projetada por Niels Provos e David Mazières, baseada na cifra Blowfish. 
+A função bcrypt é o algoritmo de hash de senha padrão para o OpenBSD. Existem implementações de bcrypt 
+para C, C++, C#, Java, JavaScript, PHP, Python e outras linguagens.
+
+O algoritmo bcrypt cria hash e "salga" a senha para nós usando criptografia forte. O custo computacional 
+do algoritmo é parametrizado, podendo ser aumentado à medida que os computadores ficam mais rápidos. 
+O custo de computação é chamado de fator de trabalho ou fator de custo. Ele desacelera o hashing, tornando as 
+tentativas de força bruta cada vez mais lentas. O fator de custo ideal muda ao longo do tempo à medida que os 
+computadores ficam mais rápidos. A desvantagem de um fator de alto custo é o aumento da carga nos recursos do 
+sistema e afetando a experiência do usuário.
+
+#Instalando dependências do código
 Utilize o comando abaixo para instalar as
 dependências do script.
 
@@ -5,3 +44,57 @@ pip install -r requirements.txt
 
 Após todas as dependências estarem instaladas
 execute o script main.py.
+
+#Como o script funciona?
+
+Ao executar o script main.py o seguinte menu será exibido:
+
+[OUTPUT]
+================ Opções ================
+
+    [ 1 ] Realizar Login
+    [ 2 ] Criar Usuário
+    [ 3 ] Excluir Usuário
+    [ 4 ] Mostrar tabela do DB
+
+    [ 0 ] Finalizar Programa
+
+
+Digite uma opção:
+
+Experimente criar um novo usuário através da opção 2 e verá como o bcryt gera
+o salt, o hash e como une ambos para gerar o valor que será armazenado no banco de dados do SQLite.
+
+[OUTPUT]
+Digite uma opção: 2
+============= Novo Usuário =============
+New Login: claudio 
+New Password: password-1234 
+Usuário CLAUDIO criado com sucesso.
+Clear Text Password:   password-1234
+Hashed Password:       $2b$12$sS5tcvIPdf68aiCsVXC1c.a6m5AG/R2CwC8XABZWNHn0fZMAeIM.G
+Hashed Password Salt:  $2b$12$sS5tcvIPdf68aiCsVXC1c.
+
+Quando o script main.py for executado pela primeira vez, você verá que um arquivo .sqlite3 é criado.
+É possivel acessar esse arquivo de banco do SQLite utilziando um programa como o SQLite Studio.
+
+Mas, para facilitar o acesso aos dados do banco, você pode utilizar a opção [ 4 ] do menu.
+
+[OUTPUT]
+Digite uma opção: 4
++---------+--------------------------------------------------------------+
+| Usuario | Senha                                                        |
++---------+--------------------------------------------------------------+
+| claudio | $2b$12$sS5tcvIPdf68aiCsVXC1c.a6m5AG/R2CwC8XABZWNHn0fZMAeIM.G |
++---------+--------------------------------------------------------------+
+| joao    | $2b$12$onuYdmEwoIItJhyVq.2DJuAmf7Vy7UB5PgpwFOtMm9/FQ/p6do8CK |
++---------+--------------------------------------------------------------+
+
+Por fim, é possível testar as funções [ 1 ] e [ 2 ] do menu.
+
+#Como o bcrypt verifica a senha na hora do login?
+
+O bcrypt conta com funções prontas (como por exemplo: checkpw()) para comparar a senha digitada 
+pelo usuário, na hora de um login e o hash salvo no banco de dados, retornando True ou False.
+
+--Fim--
