@@ -65,6 +65,9 @@ Digite uma opção:
 Experimente criar um novo usuário através da opção 2 e verá como o bcryt gera
 o salt, o hash e como une ambos para gerar o valor que será armazenado no banco de dados do SQLite.
 
+Assim, mesmo se 2 ou mais usuários tiverem a mesma senha, o hash armazenado no banco será diferente um do outro,
+dificultando ataques como do tipo rainbow table. 
+
 [OUTPUT]
 Digite uma opção: 2
 ============= Novo Usuário =============
